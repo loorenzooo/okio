@@ -622,4 +622,11 @@ public final class ByteStringTest {
   @Test public void asByteBuffer() {
     assertEquals(0x42, ByteString.of((byte) 0x41, (byte) 0x42, (byte) 0x43).asByteBuffer().get(1));
   }
+  
+  @Test public void myTest(){
+	  ByteString bs = ByteString.decodeHex("80");
+	  String decodedString = bs.string2("windows-1252");
+	  System.out.println(decodedString);
+  }
+ 
 }

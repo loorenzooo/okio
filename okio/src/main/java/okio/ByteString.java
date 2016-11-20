@@ -22,6 +22,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Field;
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
@@ -121,6 +122,18 @@ public class ByteString implements Serializable, Comparable<ByteString> {
     return new String(data, charset);
   }
 
+  /** Constructs a new {@code String} by decoding the bytes using a charset specified by its canonical name. */
+  public String string2(String canonicalName) {
+  
+    try {
+		return new String(data, canonicalName);
+	} catch (UnsupportedEncodingException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+		return null;
+	}
+  } 
+  
   /**
    * Returns this byte string encoded as <a
    * href="http://www.ietf.org/rfc/rfc2045.txt">Base64</a>. In violation of the
