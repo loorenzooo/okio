@@ -15,22 +15,6 @@
  */
 package okio;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
-import java.nio.ByteBuffer;
-import java.nio.charset.Charset;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameter;
-import org.junit.runners.Parameterized.Parameters;
-
 import static okio.TestUtil.assertByteArraysEquals;
 import static okio.TestUtil.assertEquivalent;
 import static org.junit.Assert.assertEquals;
@@ -38,6 +22,24 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.nio.ByteBuffer;
+import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameter;
+import org.junit.runners.Parameterized.Parameters;
 
 @RunWith(Parameterized.class)
 public final class ByteStringTest {
@@ -623,10 +625,16 @@ public final class ByteStringTest {
     assertEquals(0x42, ByteString.of((byte) 0x41, (byte) 0x42, (byte) 0x43).asByteBuffer().get(1));
   }
   
-  @Test public void myTest(){
+  @Test public void stringUsingCharset(){
 	  ByteString bs = ByteString.decodeHex("80");
-	  String decodedString = bs.string2("windows-1252");
-	  System.out.println(decodedString);
+	  String decodedString;
+	try {
+		decodedString = bs.stringUsingCharset("windows-1252");
+		System.out.println(decodedString);
+		assertEquals("€", decodedString);
+	} catch (UnsupportedEncodingException e) {
+		fail(e.getMessage());
+	}
   }
  
 }

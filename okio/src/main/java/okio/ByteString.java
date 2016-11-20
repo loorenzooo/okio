@@ -122,17 +122,11 @@ public class ByteString implements Serializable, Comparable<ByteString> {
     return new String(data, charset);
   }
 
-  /** Constructs a new {@code String} by decoding the bytes using a charset specified by its canonical name. */
-  public String string2(String canonicalName) {
-  
-    try {
-		return new String(data, canonicalName);
-	} catch (UnsupportedEncodingException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-		return null;
-	}
-  } 
+  /** Constructs a new {@code String} by decoding the bytes using a charset specified by its canonical name. 
+ * @throws UnsupportedEncodingException */
+  public String stringUsingCharset(String canonicalName) throws UnsupportedEncodingException {
+	  return new String(data, canonicalName); 
+   } 
   
   /**
    * Returns this byte string encoded as <a
